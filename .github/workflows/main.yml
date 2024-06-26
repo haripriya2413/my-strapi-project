@@ -24,7 +24,6 @@ jobs:
       run: |
         docker build -t priya247/mystrapi1docker:latest .
         docker push priya247/mystrapi1docker:latest
-        
   deploy:
     needs: build
     runs-on: ubuntu-latest
