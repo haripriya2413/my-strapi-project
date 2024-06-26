@@ -1,4 +1,8 @@
 
+variable "private_key_path" {
+  description = "Path to the private key file"
+  type        = string
+}
 
 resource "aws_security_group" "strapi-sg" {
   name        = "strapi-sg"
@@ -53,7 +57,7 @@ resource "aws_instance" "strapi" {
   ami           = data.aws_ami.ubuntu.id
   #ami           = var.ami  # Ubuntu 20.04 LTS AMI
   instance_type = var.instance_type
-  key_name      = aws_key_pair.strapi_keypair.key_name# Replace with your key pair name
+  key_name      = "devops"
     tags = {
         Name = "Strapi-Instance"
      }
@@ -76,7 +80,7 @@ provisioner "remote-exec" {
    connection {
     type        = "ssh"
     user        = "ubuntu"  # Replace with the appropriate username for your EC2 instance
-    private_key = file("~/.ssh/id_rsa")   # Replace with the path to your private key
+    private_key = file(var.private_key_path)  # Replace with the path to your private key
     host        = self.public_ip
   }
  
@@ -84,12 +88,3 @@ provisioner "remote-exec" {
 }
 
 
-resource "tls_private_key" "strapi_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "strapi_keypair" {
-  key_name   = "strapi-keypair2"
-  public_key = file("~/.ssh/id_rsa.pub") 
-}
