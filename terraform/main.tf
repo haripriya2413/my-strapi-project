@@ -68,7 +68,7 @@ provisioner "remote-exec" {
       "sudo usermod -aG docker ubuntu",
       "sudo chmod 666 /var/run/docker.sock",
       #"docker pull priya247/${var.docker_image}",  # Replace with your Docker image
-      "docker run -d -p 80:80 -p 1337:1337 priya247/my-strapi-project:latest"  
+      "docker run -d -p 80:80 -p 1337:1337 priya247/mystrapi1docker:latest"  
 
             
     ]
